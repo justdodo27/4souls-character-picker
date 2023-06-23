@@ -1,30 +1,38 @@
 <script setup>
+import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import Character from './components/Character.vue';
+
+fetch('./characters.json')
+  .then((response) => response.json())
+  .then((json) => characters.value = json)
+
+const characters = ref(null)
+
+function getPadding(idx) {
+  let left_pad = 100 / characters.length
+  return `${left_pad}vw`
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container">
+    <Character class="character-slot" :idx="idx" :characters_length="characters.length" :character_data="character" v-for="character, idx in characters" :key="idx" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  overflow: hidden;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.character-slot {
+  position: absolute;
+  width: 200px;
+  height: 300px;
 }
 </style>
