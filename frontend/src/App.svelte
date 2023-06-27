@@ -24,7 +24,7 @@
   $: characters_filtered = characters.filter((character) => packs.some((pack) => pack.name === character.set_group && pack.checked))
 
   onMount(async () => {
-    const res = await fetch('./characters.json')
+    const res = await fetch('https://raw.githubusercontent.com/justdodo27/4souls-character-picker/main/frontend/characters.json')
     characters = await res.json()
     
   })
